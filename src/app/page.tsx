@@ -1,3 +1,5 @@
+import GoogleMapComponent from '@/components/google-map';
+
 export default function Home() {
-	return <h1>Home</h1>;
+	return <GoogleMapComponent />;
 }

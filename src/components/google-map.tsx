@@ -7,7 +7,7 @@ import {
 	Marker,
 	useLoadScript,
 } from '@react-google-maps/api';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const center = {
 	lat: -8.052643905437522,
@@ -31,10 +31,6 @@ export interface IRadar {
 }
 
 const GoogleMapComponent = () => {
-	const [currentLocation, setCurrentLocation] = useState<{
-		lat: number;
-		lng: number;
-	} | null>(null);
 	const [activeMarker, setActiveMarker] = useState<number | null>(null);
 	const [radars, setRadars] = useState<IRadar[]>([]);
 
@@ -42,7 +38,13 @@ const GoogleMapComponent = () => {
 		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
 	});
 
-	if (!isLoaded) return <div>Loading...</div>;
+	if (!isLoaded)
+		return (
+			<div className='flex  flex-col h-screen items-center justify-center gap-4'>
+				<h1 className='text-2xl font-medium'>Carregando Mapa</h1>
+				<div className='w-10 h-10 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]'></div>
+			</div>
+		);
 
 	async function fetchData() {
 		const response = await getData();
@@ -65,7 +67,6 @@ const GoogleMapComponent = () => {
 				],
 			}}
 		>
-			{currentLocation && <Marker position={currentLocation} />}
 			{radars.length > 0 &&
 				radars.map((radar) => (
 					<Marker
@@ -84,15 +85,16 @@ const GoogleMapComponent = () => {
 					>
 						{activeMarker === radar._id ? (
 							<InfoWindow onCloseClick={() => setActiveMarker(null)}>
-								<div className='text-black max-w-52'>
+								<section className='text-black max-w-52 space-y-2 font-poppins'>
+									<p>Local: {radar.local_instalacao}</p>
+									<p>Faixas Fiscalizadas: {radar.faixas_fiscalizadas}</p>
+									<p>Sentido: {radar.sentido_fiscalizacao}</p>
 									<h3>Radar: {radar.identificacao_equipamento}</h3>
 									<p>Tipo: {radar.tipo_equipamento}</p>
-									<p>Sentido: {radar.sentido_fiscalizacao}</p>
-									<p>Local: {radar.local_instalacao}</p>
 									<p>
 										Velocidade Fiscalizada: {radar.velocidade_fiscalizada} Km/h
 									</p>
-								</div>
+								</section>
 							</InfoWindow>
 						) : null}
 					</Marker>

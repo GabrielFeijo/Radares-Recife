@@ -82,10 +82,10 @@ const GoogleMapComponent = () => {
 						{activeMarker === radar._id ? (
 							<InfoWindow onCloseClick={() => setActiveMarker(null)}>
 								<section className='text-black max-w-52 space-y-2 font-poppins'>
-									<p>Local: {radar.local_instalacao}</p>
+									<h2>Local: {radar.local_instalacao}</h2>
 									<p>Faixas Fiscalizadas: {radar.faixas_fiscalizadas}</p>
 									<p>Sentido: {radar.sentido_fiscalizacao}</p>
-									<h3>Radar: {radar.identificacao_equipamento}</h3>
+									<p>Radar: {radar.identificacao_equipamento}</p>
 									<p>Tipo: {radar.tipo_equipamento}</p>
 									<p>
 										Velocidade Fiscalizada: {radar.velocidade_fiscalizada} Km/h

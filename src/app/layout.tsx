@@ -21,12 +21,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='pt-BR'>
-			<head>
+			<Head>
 				<meta
 					http-equiv='Content-Security-Policy'
 					content='upgrade-insecure-requests'
 				/>
-			</head>
+			</Head>
 			<body className={poppins.className}>{children}</body>
 		</html>
 	);

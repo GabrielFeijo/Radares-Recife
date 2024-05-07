@@ -1,6 +1,5 @@
 'use client';
 
-import { getData } from '@/services/get-data';
 import {
 	GoogleMap,
 	InfoWindow,
@@ -8,6 +7,8 @@ import {
 	useLoadScript,
 } from '@react-google-maps/api';
 import { useState } from 'react';
+
+import allRadars from '@/data/radars.json';
 
 const center = {
 	lat: -8.052643905437522,
@@ -31,8 +32,9 @@ export interface IRadar {
 }
 
 const GoogleMapComponent = () => {
+	const radars = allRadars.result.records;
+
 	const [activeMarker, setActiveMarker] = useState<number | null>(null);
-	const [radars, setRadars] = useState<IRadar[]>([]);
 
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
@@ -46,18 +48,12 @@ const GoogleMapComponent = () => {
 			</div>
 		);
 
-	async function fetchData() {
-		const response = await getData();
-		setRadars(response.result.records);
-	}
-
 	return (
 		<GoogleMap
 			zoom={15}
 			center={center}
 			mapContainerClassName='map'
 			mapContainerStyle={{ width: '100%', height: '100vh', margin: 'auto' }}
-			onLoad={fetchData}
 			options={{
 				styles: [
 					{

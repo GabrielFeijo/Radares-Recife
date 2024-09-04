@@ -79,7 +79,7 @@ const MapComponent: React.FC<MapProps> = ({
 							title={radar.local_instalacao}
 							icon={customIcon}
 							eventHandlers={{
-								click: () => {
+								mousedown: () => {
 									setActiveMarker(radar._id);
 								},
 							}}
@@ -128,7 +128,7 @@ const MapComponent: React.FC<MapProps> = ({
 							title={camera.endereco}
 							icon={cameraIcon}
 							eventHandlers={{
-								click: () => {
+								mousedown: () => {
 									setActiveMarker(camera.id);
 								},
 							}}
